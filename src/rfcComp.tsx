@@ -4,6 +4,7 @@ import {useState} from 'react'
 interface Inprops {
     name:string
 }
+//待解决，如何使用useState实现
 // interface InState {
 //     num: number
 //     [propName: string]: any
