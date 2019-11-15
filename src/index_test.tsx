@@ -4,14 +4,13 @@ import App from './App';
 // import {MyComponent} from './PropsComponent'
 // import StatePropsComp from './state_propsComp'
 // import RfcComp from './rfcComp'
-import {Upload} from './components/Upload'
+// import {Upload} from './components/Upload'
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <>
     {/* <MyComponent name='propsComponents'/> */}
     <App/>  
-    <Upload/>
     {/* <StatePropsComp />
     <RfcComp name='rfctest'/> */}
   </>,

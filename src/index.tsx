@@ -7,7 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 ReactDOM.render(
   <>
     <App/>  
-    <Upload/>
+    <Upload url='http://www.baidu.com' callBack={(res)=>{console.log(res)}}/>
   </>,
   document.getElementById('root') as HTMLElement
 );
