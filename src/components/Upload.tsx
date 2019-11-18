@@ -1,5 +1,7 @@
 import * as React from 'react'
 import Button from '@material-ui/core/Button'
+import { makeStyles } from '@material-ui/core/styles';
+import {SimpleDialog} from './SimpleDialog'
 
 /*
 @params url 发送链接
@@ -11,13 +13,32 @@ interface UpProps {
     url: string,
     method?: string,
     id?: string,
-    callBack(res: any): void
+    callBack:(res: any)=> void
 }
 
+
+const useStyle = makeStyles({
+    root: {
+        display:'flex'
+    }
+})
+
+
+
 export const Upload: React.SFC<UpProps> = (props: UpProps) => {
+    const classes = useStyle()
     const {url, id, method = 'post', callBack} = props
     const [src ,setSrc] = React.useState('' as string)
-    const [fileForm, setFileForm] = React.useState('' as any)
+    const [fileForm, setFileForm] = React.useState([] as any)
+    const [open, setOpen] = React.useState(false as boolean)
+    //点击关闭
+    const handleClose = () =>{
+        setOpen(false)
+    }
+    //弹出对话框
+    const handleOpen = () => {
+        setOpen(true)
+    }
 //预览图片并保存文件
     const previewImg = () => {
         let form =new FormData()
@@ -27,14 +48,16 @@ export const Upload: React.SFC<UpProps> = (props: UpProps) => {
         input.accept="image/*"
         input.click()
         input.onchange = () =>{
+            console.log(input.files)
             let file = input.files![0]
             form.append('file', file)
             if(id) form.append('id', id)
             //保存文件
-            setFileForm(setFileForm)
+            setFileForm(file)
 
             reads.readAsDataURL(file)
             reads.onload = function (e) {
+                // console.log(this.result)
                 setSrc(this.result as string)
             }
         }
@@ -43,9 +66,9 @@ export const Upload: React.SFC<UpProps> = (props: UpProps) => {
     const uploadOnclick = () => {
         fetch(url, {
             method,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' 
-            },
+            // headers: {
+            //     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8' 
+            // },
             body: fileForm
         })
         .then(response => response.json())
@@ -58,10 +81,16 @@ export const Upload: React.SFC<UpProps> = (props: UpProps) => {
         })
     }
     return (
+        //考虑给个+号做一个模态框弹出，再确认是否需要上传
         <>
-        <Button onClick={previewImg}>+</Button>
-        <Button variant="contained" color="primary"  onClick={uploadOnclick}>上传 </Button>
-       <img src={src} id='img' alt='img'></img>
+            <div className={classes.root}>
+                <Button onClick={handleOpen}>upload</Button>
+            </div>
+                <SimpleDialog open={open} onClose={handleClose}>
+                    <Button onClick={previewImg}>-</Button>
+                    <img src={src} id='img' alt='img'></img>
+                    <Button variant="contained" color="primary"  onClick={uploadOnclick}>上传 </Button>
+                </SimpleDialog>
         </>
     )
 }
