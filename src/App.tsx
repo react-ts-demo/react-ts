@@ -1,10 +1,33 @@
-import * as React from 'react';
+import * as React from 'react'
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link,
+//   Redirect
+// } from "react-router-dom"
+import {Upload} from './components/Upload'
 
 const App:React.SFC = () => {
   return(
-    <div>
-      this is Test
-    </div>
+    <>
+      {/* <Router>
+      <Link to='/home'>home</Link>
+      <Link to='/shop'>shop</Link>
+      <Link to='/cart'>cart</Link>
+      <Link to='/my'>my</Link>
+        <Switch>
+          <Route path='/home'></Route>
+          <Route path='/shop'></Route>
+          <Route path='/my'></Route>
+          <Route path='/cart' component={Upload}></Route>
+          <Redirect to='/cart' from='/'></Redirect>
+          <Redirect to='/404'></Redirect>
+        </Switch>
+      </Router> */}
+    <Upload url='http://www.baidu.com' callBack={(res)=>{console.log(res)}}/>
+
+    </>
   )
 }
 
