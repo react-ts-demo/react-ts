@@ -1,5 +1,6 @@
 import * as React from "react";
 import Button from "@material-ui/core/Button";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 
@@ -16,64 +17,71 @@ interface UpProps {
   callBack: (res: any) => void;
 }
 
-
 export const Upload: React.FC<UpProps> = (props: UpProps) => {
-    const { url, id, method = "post", callBack } = props;
-    const [src, setSrc] = React.useState("" as string);
-    const [fileForm, setFileForm] = React.useState([] as any);
-    const [open, setOpen] = React.useState(false as boolean);
-    const [imgDisplay, setImgDisplay] = React.useState('none' as string)
+  const { url, id, method = "post", callBack } = props;
+  const [src, setSrc] = React.useState("" as string);
+  const [fileForm, setFileForm] = React.useState("" as any);
+  const [open, setOpen] = React.useState(false as boolean);
+  const [imgDisplay, setImgDisplay] = React.useState("none" as string);
 
-    const useStyle = makeStyles({
-        root: {
-        display: "flex"
-        },
-        img: {
-            display: imgDisplay,
-            width:'100px',
-            height:'auto',
-            marginTop:'20px',
-            marginLeft:"20px",
-            top: '0',
-            position:'absolute'
-        },
-        modal: {
-            width:'500px',
-            height:'500px',
-            borderRadius:'5px',
-            boxShadow:'5px'
-        },
-        close: {
-          width:'100%',
-          height:'30px',
-          marginLeft:'470px',
-          fontSize:'24px'
-        },
-        up: {
-          fontSize:'24px',
-          width:'50px',
-          height:'50px'
-        },
-        center: {
-          paddingTop:'300px',
-          position:'relative'
-        },
-        bottom: {
-          width:'100px',
-          marginLeft:'350px',
-          display:'flex',
-          justifyContent:'space-around'
-        }
-    });
-    const classes = useStyle();
+  const useStyle = makeStyles({
+    root: {
+      display: "flex"
+    },
+    img: {
+      display: imgDisplay,
+      height: "100px",
+      width: "auto",
+      marginLeft: "30px"
+    },
+    modal: {
+      width: "500px",
+      borderRadius: "5px",
+      boxShadow: "5px"
+    },
+    close: {
+      width: "100%",
+      height: "50px",
+      marginLeft: "470px",
+      fontSize: "24px"
+    },
+    up: {
+      fontSize: "24px",
+      width: "100px",
+      height: "100px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      border: "1px dashed #dedede",
+      marginLeft: "30px"
+    },
+    center: {
+      display: "flex",
+      alignItems: "center"
+    },
+    bottom: {
+      width: "180px",
+      marginLeft: "300px",
+      display: "flex",
+      justifyContent: "space-around",
+      marginBottom: "30px",
+      marginTop: "30px"
+    }
+  });
+  const classes = useStyle();
   //点击关闭
   const handleClose = () => {
     setOpen(false);
+    setFileForm("");
   };
   //弹出对话框
   const handleOpen = () => {
     setOpen(true);
   };
+  //当文件改变是控制图片显示隐藏
+  React.useEffect(() => {
+    fileForm === "" ? setImgDisplay("none") : setImgDisplay("inline-block");
+  }, [fileForm]);
   //预览图片并保存文件
   const previewImg = () => {
     let form = new FormData();
@@ -92,9 +100,7 @@ export const Upload: React.FC<UpProps> = (props: UpProps) => {
 
       reads.readAsDataURL(file);
       reads.onload = function(e) {
-        // console.log(this.result)
-        setSrc(this.result as string)
-        setImgDisplay('block')
+        setSrc(this.result as string);
       };
     };
   };
@@ -117,23 +123,31 @@ export const Upload: React.FC<UpProps> = (props: UpProps) => {
       });
   };
   return (
-    //考虑给个+号做一个模态框弹出，再确认是否需要上传
     <>
       <div className={classes.root}>
-        <Button onClick={handleOpen}>upload</Button>
+        <Button
+          variant="contained"
+          color="default"
+          startIcon={<CloudUploadIcon />}
+          onClick={handleOpen}
+        >
+          Upload
+        </Button>
       </div>
-    {/* 展开模态框部分 */}
+      {/* 展开模态框部分 */}
       <Dialog
         onClose={handleClose}
         aria-labelledby="simple-dialog-title"
         open={open}
       >
         <div className={classes.modal}>
-          <div onClick={handleClose} className={classes.close}>x</div>
-          <div>
-            <Button onClick={previewImg} className={classes.up}>+</Button>
+          <div onClick={handleClose} className={classes.close}>
+            x
           </div>
           <div className={classes.center}>
+            <Button onClick={previewImg} className={classes.up}>
+              +
+            </Button>
             <img src={src} className={classes.img} id="img" alt="img"></img>
           </div>
           <div className={classes.bottom}>
