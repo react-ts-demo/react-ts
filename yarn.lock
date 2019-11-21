@@ -2898,6 +2898,11 @@ escope@^3.6.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
+eslint-plugin-react-hooks@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-react-hooks/download/eslint-plugin-react-hooks-2.3.0.tgz#53e073961f1f5ccf8dd19558036c1fac8c29d99a"
+  integrity sha1-U+Bzlh8fXM+N0ZVYA2wfrIwp2Zo=
+
 esprima@^2.6.0:
   version "2.7.3"
   resolved "https://registry.npm.taobao.org/esprima/download/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"

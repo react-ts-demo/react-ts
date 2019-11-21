@@ -14,11 +14,12 @@ interface UpProps {
   url: string;
   method?: string;
   id?: string;
+  img?: boolean;
   callBack: (res: any) => void;
 }
 
 export const Upload: React.FC<UpProps> = (props: UpProps) => {
-  const { url, id, method = "post", callBack } = props;
+  const { url, id, method = "post", callBack, img=false } = props;
   const [src, setSrc] = React.useState("" as string);
   const [fileForm, setFileForm] = React.useState("" as any);
   const [open, setOpen] = React.useState(false as boolean);
@@ -80,7 +81,7 @@ export const Upload: React.FC<UpProps> = (props: UpProps) => {
   };
   //当文件改变是控制图片显示隐藏
   React.useEffect(() => {
-    fileForm === "" ? setImgDisplay("none") : setImgDisplay("inline-block");
+   if(img) fileForm === "" ? setImgDisplay("none") : setImgDisplay("inline-block")
   }, [fileForm]);
   //预览图片并保存文件
   const previewImg = () => {
@@ -88,7 +89,8 @@ export const Upload: React.FC<UpProps> = (props: UpProps) => {
     let input = document.createElement("input");
     let reads = new FileReader();
     input.type = "file";
-    input.accept = "image/*";
+    //控制图片上传
+    if(img) input.accept = "image/*";
     input.click();
     input.onchange = () => {
       console.log(input.files);
@@ -149,6 +151,7 @@ export const Upload: React.FC<UpProps> = (props: UpProps) => {
               +
             </Button>
             <img src={src} className={classes.img} id="img" alt="img"></img>
+            {/* <div>文件名</div> */}
           </div>
           <div className={classes.bottom}>
             <Button variant="contained" color="primary" onClick={uploadOnclick}>

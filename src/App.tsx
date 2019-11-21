@@ -9,6 +9,7 @@ import * as React from 'react'
 import {Upload} from './components/Upload'
 
 const App:React.SFC = () => {
+  
   return(
     <>
       {/* <Router>
@@ -25,10 +26,9 @@ const App:React.SFC = () => {
           <Redirect to='/404'></Redirect>
         </Switch>
       </Router> */}
-    <Upload url='http://www.baidu.com' callBack={(res)=>{console.log(res)}}/>
+    <Upload url='http://www.baidu.com' img={true} callBack={(res)=>{console.log(res)}}/>
 
     </>
   )
 }
-
 export default App;
