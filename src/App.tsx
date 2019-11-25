@@ -7,11 +7,14 @@ import * as React from 'react'
 //   Redirect
 // } from "react-router-dom"
 import {Upload} from './components/Upload'
+import {Counter} from './components/Counter'
+// import {Context} from './redux/Context'
+
 
 const App:React.SFC = () => {
-  
+  // const {dispatch} = React.useContext(Context)
   return(
-    <>
+    <Counter>
       {/* <Router>
       <Link to='/home'>home</Link>
       <Link to='/shop'>shop</Link>
@@ -28,7 +31,7 @@ const App:React.SFC = () => {
       </Router> */}
     <Upload url='http://www.baidu.com' img={true} callBack={(res)=>{console.log(res)}}/>
 
-    </>
+    </Counter>
   )
 }
 export default App;
